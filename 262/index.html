@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>猎豹手机浏览器 iPhone V1.0 BETA版 测评 | 不掏蜂窝的熊</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">猎豹手机浏览器 iPhone V1.0 BETA版 测评</h1><a id="logo" href="/.">不掏蜂窝的熊</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">猎豹手机浏览器 iPhone V1.0 BETA版 测评</h1><div class="post-meta">Jun 5, 2013<span> | </span><span class="category"><a href="/categories/学而后思/">学而后思</a></span></div><a class="disqus-comment-count" data-disqus-identifier="262/" href="/262/#disqus_thread"></a><div class="post-content"><p><img src="/images/2013/06/liebao1.jpg" alt=""></p>
+<p>昨晚在线看Perfume的演唱会，看到兴头上时卡壳了——缓冲到一半失败了，而且只能从头开始。屡次尝试无果，怒气上逆，使尽浑身解数各种折腾。半小时后，我已经成功搞到下载资源。这下倒着看都可以，不必再受某破视频网站的气了。</p>
+<p>说这个事情，只是突然觉得，程序员被逼急了，有时候会干出一些不可思议的事情。</p>
+<p>正文从这里开始。</p>
+<p>2013的展望，其中有一点，就是希望自己的关注点能够更广一些。试用了iOS平台上的浏览器无数，一直都没能好好写下测评或者总结。感谢猎豹浏览器运营人员如此造势，beta版还没发布就把大家的胃口吊足了；也感谢猎豹浏览器的产品人员选择了这么好的发布时间，正好错开了我的需求开发时间。天时地利人和，正好拿猎豹浏览器试刀。</p>
+<p>猎豹浏览器6月3号内测（需要内测码），6号开通官网申请测试资格，噱头做足。下载了安装包，被活生生地挡在了内测验证的界面外，死活进不去，感觉胸口一股怒气。不屑于为了个验证码，写些恶心的文字去讨好猎豹，破解尤其必要性。正当我苦恼于如何破解时，组里的劲爷已经破解完毕了，顺利进入主界面。</p>
+<p>具体的破解过程就不详述，截图也不上了，至少猎豹总不能凭这几句空话查人家水表。不过总结有二：1、还是不要惹怒程序员，劲爷也是被逼急了的，饥饿营销得有个度；2、验证相关的类和接口写得那么清晰，想装成看不见也难呀，这么机密的东西，简单混淆还是必要的。</p>
+<p>说说功能。猎豹手机浏览器宣传语中，主打三点：视频下载、炫酷、急速。</p>
+<h2 id="视频下载"><a href="#视频下载" class="headerlink" title="视频下载"></a>视频下载</h2><blockquote>
+<p>支持百种视频格式，强大的下载功能，超越所有传统浏览器与视频APP应用；手机浏览器不再只是文字阅读器，带给您最完美的观影追剧体验。</p>
+</blockquote>
+<p>猎豹手机浏览器主打视频，这一点已经很明显了。为了配合这一点，影视相关的网站抢占了首页的显要位置。功能上主要有两点：视频下载和多格式支持。对于视频下载，PP浏览器和UC浏览器已经有相关功能了。多格式支持，这个有趣，因为至少在一个星期前，组内还在讨论浏览器到底要不要做成一个视频播放器。<br>打印符号表（目前还不清楚猎豹为啥编译了两份二进制文件，armv7和armv7s），发现大量ffmepg的符号表。从可执行文件的大小来看，排除掉多余的一份armv7s，以及符号表的大小，可执行文件至少也在10M左右。对于一个没啥功能的APP来说，10M已经严重超重了，初步怀疑猎豹编译了ffmepg的解码库。尝试播放rm、rmvb和flv，只有flv能否识别，能够支持100余种格式视频的猎豹浏览器不知是如何漏掉rmvb这种这么大众的格式的，怀疑是ffmepg还没移植改写完善（虽说RealPlayer至今没开源，可天朝谁把这当事儿）。播放flv时查看了播放界面的视图结构，都是自定义播放类，软解码无疑了。<br>为了支持在线视频下载，猎豹的开发人员可谓是尽心尽力啊，针对每个常见的视频网站（好像还有xx视频网站，反正在某个js里面不小心点到了，囧）都写了一份js和lua进行适配，使之能够获得每个常见视频网站的视频播放地址。这种无异于hardcode的做法，面临的最大的问题就是工作量巨大，以及当视频网站页面改变时，与之适配的js文件会失效。为了解决js失效的问题，初步猜想是需要对js文件进行在线更新的。</p>
+<h2 id="炫酷"><a href="#炫酷" class="headerlink" title="炫酷"></a>炫酷</h2><blockquote>
+<p>首创智能圈，颠覆传统浏览器工具栏设计，通过点击、滑动的操作简化移动触屏设备的浏览体验；卡牌式的多标签，大图浏览，操作更方便。</p>
+</blockquote>
+<p>对于“智能圈”这个设计，无非就在滑动点击上面加多了个圈，而滑动点击这个操作，在猛犸浏览器早已应用多时。所以我觉得猛犸浏览器的作者看到了，肯定被“首创”二字华丽丽亮瞎。当然好用不好用，用户习惯问题。若是从其他浏览器转移过来的用户，一般很难习惯，经常会有找不到按钮的感觉。另外，猛犸浏览器才不干这种把首页按钮和多窗口按钮，放在比前进后退按钮更容易操作到的地方的傻事。还有，左滑前进右滑后退这种逆天的操作是怎么想出来的。若有同学觉得对这种滑动点击操作很顺手的，猛犸浏览器的体验才真实贴心正宗。（我真不是猛犸的托。）<br>至于“卡牌式的多标签”，这不明摆着就是chrome的多窗口管理形式么。抄得倒不落，把边缘滑动切换窗口也给抄去了。善意提醒，点击多窗口按钮时，明显卡顿，应该是截图时机有点问题。另外，有些不必要的截图可以省下，比方说，首页，或者一个距离上一次截图没发生过变化的网页。<br>首页，毫无悬念的九宫格+折叠栏。这是天朝浏览器的一贯风格。不过首页似乎还没那么完善，暂时美其名曰“简洁”吧。<br>日夜间模式切换动画，我被华丽丽亮瞎了，怎么连那个太阳和月亮图片都有种似曾相识的感觉。咳咳还是不说了。<br>网址收藏动画，类似于折纸的动画，是UI方面唯一能让我眼前一亮的点儿，因为我实在想不起哪个app使用了类似的动画。我会说我反反复复点了好多次收藏网址的五角星么。</p>
+<h2 id="急速"><a href="#急速" class="headerlink" title="急速"></a>急速</h2><blockquote>
+<p>基于Chrome内核做了100多项的优化，瞬间启动，智能防卡死，给您超爽的上网体验；独家网页缓存技术，访问速度提升100%。</p>
+</blockquote>
+<p>据说android组的同学已经确认，android版的猎豹浏览器是chrome+壳的百分百壳浏览器了。chrome本来就卡，再加了一层壳，就变成了4核2g才能勉强带得动的主儿了。<br>出于谨慎，还是打印了相关的网页视图层次，确认使用了iOS上的官方网页控件UIWebView无疑了。同时也确认了缓存结构，很是正常。对于页面加载时间，出于时间考虑就没有细细追究了。私有API方面，使用得相当的成熟老练，不过感觉有些私有API没有做混淆。上面的一堆宣传语，应该是针对android平台而言的。</p>
+<h2 id="最终结论："><a href="#最终结论：" class="headerlink" title="最终结论："></a>最终结论：</h2><ol>
+<li><strong>壳浏览器</strong></li>
+<li><strong>用户体验方面，“集大成者”</strong></li>
+<li><strong>视频方面比较用心，需重点关注</strong></li>
+</ol>
+<p>当然这些都也只是盲人摸象罢了。还有更多细节的东西涉及公司的东西，就不公开了。</p>
+</div><div class="tags"><a href="/tags/猎豹浏览器/">猎豹浏览器</a></div><div class="post-nav"><a class="pre" href="/279/">偶像与领袖的力量（续）</a><a class="next" href="/247/">偶像与领袖的力量</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'hotobear';
+var disqus_identifier = '262/';
+var disqus_title = '猎豹手机浏览器 iPhone V1.0 BETA版 测评';
+var disqus_url = 'http://hotobear.com/262/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//hotobear.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://hotobear.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学而后思/">学而后思</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活点滴/">生活点滴</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/调色板/">调色板</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/iOS-7/" style="font-size: 15px;">iOS 7</a> <a href="/tags/阶段总结/" style="font-size: 15px;">阶段总结</a> <a href="/tags/偶像/" style="font-size: 15px;">偶像</a> <a href="/tags/驾校/" style="font-size: 15px;">驾校</a> <a href="/tags/焦虑/" style="font-size: 15px;">焦虑</a> <a href="/tags/猎豹浏览器/" style="font-size: 15px;">猎豹浏览器</a> <a href="/tags/熊本熊/" style="font-size: 15px;">熊本熊</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/iOS调试技巧/" style="font-size: 15px;">iOS调试技巧</a> <a href="/tags/AKB48/" style="font-size: 15px;">AKB48</a> <a href="/tags/城市物种日历/" style="font-size: 15px;">城市物种日历</a> <a href="/tags/一吻定情/" style="font-size: 15px;">一吻定情</a> <a href="/tags/Safari/" style="font-size: 15px;">Safari</a> <a href="/tags/梶浦由记香港演唱会/" style="font-size: 15px;">梶浦由记香港演唱会</a> <a href="/tags/动画/" style="font-size: 15px;">动画</a> <a href="/tags/博客日志/" style="font-size: 15px;">博客日志</a> <a href="/tags/越狱开发/" style="font-size: 15px;">越狱开发</a> <a href="/tags/iOS-8/" style="font-size: 15px;">iOS 8</a> <a href="/tags/WebKit/" style="font-size: 15px;">WebKit</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/游戏/" style="font-size: 15px;">游戏</a> <a href="/tags/iOS-9/" style="font-size: 15px;">iOS 9</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">不掏蜂窝的熊.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

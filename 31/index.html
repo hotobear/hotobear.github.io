@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>越狱开发历程（1）——何为越狱，为何越狱 | 不掏蜂窝的熊</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">越狱开发历程（1）——何为越狱，为何越狱</h1><a id="logo" href="/.">不掏蜂窝的熊</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">越狱开发历程（1）——何为越狱，为何越狱</h1><div class="post-meta">Sep 2, 2012<span> | </span><span class="category"><a href="/categories/学而后思/">学而后思</a></span></div><a class="disqus-comment-count" data-disqus-identifier="31/" href="/31/#disqus_thread"></a><div class="post-content"><p>对于很多中国小白用户而言，买iPhone == 越狱 == 免费安装付费软件 + 免费内购。在这个越狱率高达90%、越狱之后还安装iApCracher（内购破解插件）的神奇国度里，国内很多AppStore开发者对越狱深恶痛绝而又无可奈何。在写这篇文章对时候，我特地看里下中国区免费排行前25名，里面就有4个网游类游戏。近期大量免费网游类游戏上架，大都粗劣不堪，我就像看到近几年大量AKB48之流充斥日本歌坛、oricon前三名的演唱者加起来超百人一样痛心。AppStore游戏正和国内PC游戏同质化，里面有开发者被迫转型的无奈。了解更多，可以看看<a href="http://www.leiphone.com/" target="_blank" rel="noopener">雷锋网</a>的这篇文章：<a href="http://www.leiphone.com/0820-utlee-gongbao.html" target="_blank" rel="noopener">《宫爆老奶奶一周销售日记：还原真实的iOS游戏血泪史》</a>。</p>
+<p>刚买iPhone，我是那骄傲的10%，而且和组里那铁杆果粉一样坚决不越狱。看到喜欢的游戏，我也会花个6块钱买下来。完全可以肯定，假如没有那些意外，现在我的iPhone安装的应该是iOS6.0 beta。那时我的iPhone稳定而又简单，唯一的一次卡死需要硬启动解决问题的，是用手机QQ看图片的时候（老版本的手机QQ点击查看图片奇卡无比，严重时能卡死iPhone，至今我都佩服不已）。对于iPhone的用户程序（就是那些长按能出现叉叉删除的，当然这是最简单的判别方法，不过这种方法已不可靠，如越狱版360），最糟糕的情况莫过于闪退。稍微有点iOS开发经验的人都知道，这是程序由于各种原因（野指针，内存警告，等等）而崩溃了。而对于系统程序（就是那些删不掉的），苹果公司保证它们稳定不出意外，在非越狱机上能看到它们出现崩溃或者异常，那真是你三生修来的福分。</p>
+<p>这就是iOS的简单。系统升级一键完成，用户无需担心坑爹的某些安卓机的兼容问题或者根本无法升级（想到Lumia我又想笑了）；iTunes管理着包括媒体、应用程序共享资料以及备份还原的繁杂事务；AppStore作为用户程序唯一的官方发布渠道，使用严格的签名机制让破解程序无用武之地；用户程序一旦进入后台，除了少量的行为，如音乐播放、定位、通知等能影响到用户之外，程序的行为就基本受控于用户和系统了。设计的简单，并不意味着设计者技术的平庸。简单甚至傻瓜式的用户体验，依靠的是强大的技术支撑和对用户需求的准确把握。</p>
+<p>对于开发者而言，刚接触iOS，特别是像我从其他平台（如Android）转过来的，最大的感受就是开发中遇到的大量的系统限制。用“沙盒”来形容这种境况最为贴切：程序能掌控的东西，包括资源和文件系统，都在于一个类似于“沙盒”的封闭空间中，在系统看来，这个沙盒就是一个后缀名为.app的文件夹，系统会用严格的权限限制确保程序的活动范围只在这个文件夹中；各个程序互不相关，互不打扰；用户若想删除程序，系统无非就是把这个文件夹彻底删除，干净且彻底。当然，对于一些公用资源，如通讯录、相片、音乐、定位服务、电话服务等，系统提供里部分接口供开发者能够突破沙盒来获取。不过这是需要条件的：首先，有些情况是需要用户确认的，如定位服务；其次，获取到的资源是不完整，受到的限制要远远大于系统程序。使用私有API可以解决这个问题，但是严格的审核机制终止了任何开发者想使用私有API的想法。</p>
+<p>这些东西，在我转为越狱tweak开发之前，也只是书本里的马列主义，背背也就算了，并无真正确实的理解。因为不越狱，即使作为一个开发者，眼界也是小得可怜。iOS用严格的权限限制了任何人获取其文件系统的举动。举个例子，同样是手机，Android用数据线插到电脑里，用户可以清楚地看到所有的东西（当然各类程序也肆无忌惮地修改着文件系统，每次看到Android一团糟的文件目录都有一种撞墙的冲动），而iPhone插到电脑，即使用了iTunes，也只能访问到音乐、照片这些简单到东西，甚至连照片都是只读不可写的。</p>
+<p>这就是越狱的第一点——越狱开放了iOS的文件系统，使得用户一下子获得了root权限，获得了整个iOS系统的掌控大权。越狱之后用iFunBox等工具可以可简单地看到iOS的整个文件系统，因此也可以修改系统UI、铃声，或者当U盘用。同样的，越狱之后安装的一些程序，也同样突破了沙盒的限制，甚至获得root权限，程序的行为可以不受用户和系统的限制。权利和责任的对等的，获得了root权限的用户就必须对这个系统对安全和完整性负责。可惜的是很多人越狱了，但又抱怨iPhone出现的耗电、卡机、白苹果等等现象。目测很多Android和越狱用户，确实没这个能力去负起这个责任。</p>
+<p>越狱第二点——cydia。基本所有人都把它当作越狱的显性标志。cydia表面上看来就是一个AppStore，实际上利用了另外一套软件管理系统——“Debian Package ”，也就是常说的dpkg，使用的安装包是deb，在Ubuntn上很是常见。deb的安装和卸载依靠的是一套完整的脚本，用control作为软件的标识信息，数据用tar压缩。另外，cydia还有软件源这个机制，由于我没搭过源服务器，完全不懂其中原理。</p>
+<p>越狱第三点——MobileSubstrate。这是越狱必装插件，也是tweak开发的前提。那些让iPhone能拦截黑名单电话的，或者让时间能显示年月日的，或者在状态栏添加个天气图标的程序，基本都依赖与此。事实上，MobileSubstrate包含了三大组件。</p>
+<ul>
+<li>MobileHooker</li>
+</ul>
+<p>俗称钩子。这把存在于内存里的钩子能钩住任何想钩住的系统方法，并替换成自己的实现方法。举例而言，黑名单的电话能被挂断，是因为在接通的那个系统方法里，并替换掉且不执行原有的方法，所以接通电话的事件也就被中断了。当然，那些奇怪问题诸如白苹果等事件基本都是由这个引起的。</p>
+<ul>
+<li>MobileLoader</li>
+</ul>
+<p>钩子能够加载进内存并动态替换内存，靠的就是这个。其中编写.plist文件来限制加载范围必不可少。</p>
+<ul>
+<li>Safe mode</li>
+</ul>
+<p>越狱后的机子基本都经历过安全模式，当SpringBoard崩溃时会自动进入安全模式，靠的就时这个的功劳，不然，这世界上不知又要多了多少部白苹果。</p>
+<p>若想了解更多MobileSubstrate，可以点<a href="http://www.iphonedevwiki.net/index.php/MobileSubstrate" target="_blank" rel="noopener">这里</a></p>
+<p>何为越狱已经结束，为何越狱也就明朗起来了。</p>
+<ul>
+<li>想掌握iOS的整个文件系统，把iPhone当U盘使。</li>
+<li>为了获得更好等功能，如电话增强功能、flash等</li>
+<li>搞一些修改系统的行为，如更换UI、铃声、图标，等等</li>
+<li>工作需要（比如说我）</li>
+<li>安装免费软件（我故意放到最后的）</li>
+</ul>
+<p>最后提醒一句，在非越狱机上，AppStore上的那些来电归属地，透视镜，指纹锁，基本都是假的，看完这篇文章，原因读者大概也能略知一二了。而那些省电、清内存之类的，反正我是不用，这些东西交给系统就行了，反正我上没见过iPhone4或4s会卡到游戏玩不了需要硬启动的。用户程序要操心这些东西，说真的，有心无力。有钱的话，买买几个正版的单机游戏，购买一次还提供永久的免费升级，也挺值了。</p>
+</div><div class="tags"><a href="/tags/iOS/">iOS</a><a href="/tags/越狱开发/">越狱开发</a></div><div class="post-nav"><a class="pre" href="/35/">越狱开发历程（2）——开发环境搭建</a><a class="next" href="/25/">jubeat，以及家入レオ</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'hotobear';
+var disqus_identifier = '31/';
+var disqus_title = '越狱开发历程（1）——何为越狱，为何越狱';
+var disqus_url = 'http://hotobear.com/31/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//hotobear.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://hotobear.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学而后思/">学而后思</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活点滴/">生活点滴</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/调色板/">调色板</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/iOS-7/" style="font-size: 15px;">iOS 7</a> <a href="/tags/阶段总结/" style="font-size: 15px;">阶段总结</a> <a href="/tags/偶像/" style="font-size: 15px;">偶像</a> <a href="/tags/驾校/" style="font-size: 15px;">驾校</a> <a href="/tags/焦虑/" style="font-size: 15px;">焦虑</a> <a href="/tags/猎豹浏览器/" style="font-size: 15px;">猎豹浏览器</a> <a href="/tags/熊本熊/" style="font-size: 15px;">熊本熊</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/iOS调试技巧/" style="font-size: 15px;">iOS调试技巧</a> <a href="/tags/AKB48/" style="font-size: 15px;">AKB48</a> <a href="/tags/城市物种日历/" style="font-size: 15px;">城市物种日历</a> <a href="/tags/一吻定情/" style="font-size: 15px;">一吻定情</a> <a href="/tags/Safari/" style="font-size: 15px;">Safari</a> <a href="/tags/梶浦由记香港演唱会/" style="font-size: 15px;">梶浦由记香港演唱会</a> <a href="/tags/动画/" style="font-size: 15px;">动画</a> <a href="/tags/博客日志/" style="font-size: 15px;">博客日志</a> <a href="/tags/越狱开发/" style="font-size: 15px;">越狱开发</a> <a href="/tags/iOS-8/" style="font-size: 15px;">iOS 8</a> <a href="/tags/WebKit/" style="font-size: 15px;">WebKit</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/游戏/" style="font-size: 15px;">游戏</a> <a href="/tags/iOS-9/" style="font-size: 15px;">iOS 9</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">不掏蜂窝的熊.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

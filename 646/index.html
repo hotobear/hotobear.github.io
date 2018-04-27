@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>iOS调试技巧（4）—— LLDB指令 | 不掏蜂窝的熊</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">iOS调试技巧（4）—— LLDB指令</h1><a id="logo" href="/.">不掏蜂窝的熊</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">iOS调试技巧（4）—— LLDB指令</h1><div class="post-meta">Jan 6, 2014<span> | </span><span class="category"><a href="/categories/学而后思/">学而后思</a></span></div><a class="disqus-comment-count" data-disqus-identifier="646/" href="/646/#disqus_thread"></a><div class="post-content"><p>还记得几个月前写「 <a href="/511/">iOS调试技巧（1）——断点</a>」的时候，<strong>GDB</strong>和<strong>LLDB</strong>还是一对好基友，Xcode里可以随意切换。按照苹果的风（niao）格（xing），自家的<strong>LLVM</strong>居然能和<strong>GCC</strong>和谐共处，实属难得。所以，刚刚发布的Xcode 5 阉割掉<strong>GCC</strong>之后，群众纷纷表示情绪稳定，见怪不怪。对于那些习惯了<strong>GDB</strong>的老程序猿的骂娘行为，苹果表示：我就是把<strong>GCC</strong>干掉，你打我啊！</p>
+<p>吐槽完毕，进入正题。</p>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>continue，进程继续运行</td>
+</tr>
+<tr>
+<td>r</td>
+<td>run，进程重新运行</td>
+</tr>
+<tr>
+<td>kill</td>
+<td>run，kill进程</td>
+</tr>
+<tr>
+<td>s</td>
+<td>step-in</td>
+</tr>
+<tr>
+<td>n</td>
+<td>step-over</td>
+</tr>
+<tr>
+<td>finish</td>
+<td>step-out</td>
+</tr>
+</tbody>
+</table>
+<h2 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b</td>
+<td>打印所有断点</td>
+</tr>
+<tr>
+<td>b-[NSString stringWithFormat:]</td>
+<td>Objective-C函数断点</td>
+</tr>
+<tr>
+<td>b objc_msgSend</td>
+<td>C/C++函数断点</td>
+</tr>
+<tr>
+<td>b resignFirstResponder</td>
+<td>对所有含有resignFirstResponder的函数进行断点</td>
+</tr>
+<tr>
+<td>br del 1</td>
+<td>删除某个断点（标号可以通过「打印所有断点」取得</td>
+</tr>
+</tbody>
+</table>
+<h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bt</td>
+<td>打印当前线程堆栈</td>
+</tr>
+<tr>
+<td>bt all</td>
+<td>打印所有线程堆栈</td>
+</tr>
+<tr>
+<td>up</td>
+<td>跳到上一个调用栈</td>
+</tr>
+<tr>
+<td>down</td>
+<td>跳到下一个调用栈</td>
+</tr>
+</tbody>
+</table>
+<h2 id="p-和-po"><a href="#p-和-po" class="headerlink" title="p 和 po"></a>p 和 po</h2><p>p指令可以打印结构体以及基本类型，有时会出现异常，尝试类型强转，如 p (int)a 。</p>
+<p>除了p指令外，LLDB增加了po，如 po self ，用来打印一个OC对象的description。</p>
+<p>又如下面这句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po [[[UIApplication sharedApplication] keyWindow] recursiveDescription]</span><br></pre></td></tr></table></figure>
+<p>可以用来打印一个UIView的层次结构。在Reveal还没有出来之前，这个方法是用来快速查看UIView的层次结构。</p>
+<p>事实上，p 和 po 指令是用来执行代码，并输出返回值结果。用来打印输出只是返回结果罢了。所以，在断点处输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po [self.view setBackgroundColor:[UIColor whiteColor]]</span><br></pre></td></tr></table></figure>
+<p>是可以实时生效的。</p>
+<h2 id="image"><a href="#image" class="headerlink" title="image"></a>image</h2><p>image指令可以操作符号相关的东西。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSArray *array = [[NSArray alloc] init];</span><br><span class="line">NSObject *i = [array objectAtIndex:0];</span><br></pre></td></tr></table></figure>
+<p>比如说上面的代码，运行时崩溃，控制台会输入如下：</p>
+<p><img src="/images/2014/01/QQ20141228-2@2x.jpg" alt=""></p>
+<p>通过控制台输出，可以猜测崩溃在我们的程序「test」中的某处（上图标红处），此时通过指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image lookup −a 0x00000001036d58e7</span><br></pre></td></tr></table></figure>
+<p>可以看出，程序崩溃在ViewController.m的第38行。<img src="/images/2014/01/QQ20141228-4@2x.jpg" alt=""></p>
+<p>另外，还有一个非常好用的指令，可以用来打印和某关键字相关的符号，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image lookup −r −n UIWebView</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://lldb.llvm.org/" title="The LLDB Debugger" target="_blank" rel="noopener">The LLDB Debugger</a></p>
+</div><div class="tags"><a href="/tags/iOS/">iOS</a><a href="/tags/iOS调试技巧/">iOS调试技巧</a></div><div class="post-nav"><a class="pre" href="/668/">2013总结和2014展望</a><a class="next" href="/627/">iOS调试技巧（3）—— Attach to Process with Xcode</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'hotobear';
+var disqus_identifier = '646/';
+var disqus_title = 'iOS调试技巧（4）—— LLDB指令';
+var disqus_url = 'http://hotobear.com/646/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//hotobear.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://hotobear.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学而后思/">学而后思</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活点滴/">生活点滴</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/调色板/">调色板</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/iOS-7/" style="font-size: 15px;">iOS 7</a> <a href="/tags/阶段总结/" style="font-size: 15px;">阶段总结</a> <a href="/tags/偶像/" style="font-size: 15px;">偶像</a> <a href="/tags/驾校/" style="font-size: 15px;">驾校</a> <a href="/tags/焦虑/" style="font-size: 15px;">焦虑</a> <a href="/tags/猎豹浏览器/" style="font-size: 15px;">猎豹浏览器</a> <a href="/tags/熊本熊/" style="font-size: 15px;">熊本熊</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/iOS调试技巧/" style="font-size: 15px;">iOS调试技巧</a> <a href="/tags/AKB48/" style="font-size: 15px;">AKB48</a> <a href="/tags/城市物种日历/" style="font-size: 15px;">城市物种日历</a> <a href="/tags/一吻定情/" style="font-size: 15px;">一吻定情</a> <a href="/tags/Safari/" style="font-size: 15px;">Safari</a> <a href="/tags/梶浦由记香港演唱会/" style="font-size: 15px;">梶浦由记香港演唱会</a> <a href="/tags/动画/" style="font-size: 15px;">动画</a> <a href="/tags/博客日志/" style="font-size: 15px;">博客日志</a> <a href="/tags/越狱开发/" style="font-size: 15px;">越狱开发</a> <a href="/tags/iOS-8/" style="font-size: 15px;">iOS 8</a> <a href="/tags/WebKit/" style="font-size: 15px;">WebKit</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/游戏/" style="font-size: 15px;">游戏</a> <a href="/tags/iOS-9/" style="font-size: 15px;">iOS 9</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">不掏蜂窝的熊.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

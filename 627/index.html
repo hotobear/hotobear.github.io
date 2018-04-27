@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>iOS调试技巧（3）—— Attach to Process with Xcode | 不掏蜂窝的熊</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">iOS调试技巧（3）—— Attach to Process with Xcode</h1><a id="logo" href="/.">不掏蜂窝的熊</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">iOS调试技巧（3）—— Attach to Process with Xcode</h1><div class="post-meta">Jan 3, 2014<span> | </span><span class="category"><a href="/categories/学而后思/">学而后思</a></span></div><a class="disqus-comment-count" data-disqus-identifier="627/" href="/627/#disqus_thread"></a><div class="post-content"><p>断点调试的前提，是gdb或者lldb能够attach上被调试的程序。</p>
+<p>Xcode自带lldb和gdb（Xcode 5.0去除了gdb），特别是lldb，对于Objective-C的调试很是方便；同时作为官方IDE，Xcode的图形化界面对于断点和堆栈也很是直观。所以若条件许可，利用Xcode的lldb来调试程序最为方便。</p>
+<h2 id="get-task-allow"><a href="#get-task-allow" class="headerlink" title="get-task-allow"></a>get-task-allow</h2><p>Code signing Entitlements中有一项很重要的key值，就是<strong>get-task-allow</strong>，作用如下：</p>
+<blockquote>
+<p>get-task-allow, when signed into an application, allows other processes (like the debugger) to attach to your app. Distribution profiles require that this value be turned off, while development profiles require this value to be turned on (otherwise Xcode would never be able to launch and attach to your app).</p>
+</blockquote>
+<p>也就是说，<strong>get-task-allow</strong>决定了这个app能否被Xcode调试。一般来说，上架了的程序，这个key值为空，默认为NO。</p>
+<h2 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h2><p>理所当然，既然能build进模拟器，那就说明这个app能够被调试。那么就大胆地启动app，在Xcode菜单里面选择</p>
+<p>Debug - Attach to Process - [process name]。</p>
+<p>选项中会列出Mac OS上所有的进程，有点多，按顺序找找有了。</p>
+<p>而对于模拟器上的系统程序（如Safari），默认也都是可调试的，如下图：</p>
+<p><img src="/images/2014/01/Attach-Safari-sim.png" alt=""></p>
+<h2 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h2><p>（以下内容涉及app crack）</p>
+<p>真机上的app，若不是自己build进去的，基本没有调试的权限。原因在于<strong>get-task-allow</strong>没有开启。若要开启，步骤如下：</p>
+<p>以MobileSafari为例。</p>
+<ol>
+<li><p>在越狱iOS设备上，利用iOS系统文件管理工具（itools，ifunbox），在Applications/MobileSafari.app目录下，找到MobileSafari这个执行文件，拷贝到Mac上。利用ldid将MobileSafari的code sign导出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldid -e MobileSafari  MobileSafari.xml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开MobileSafari.xml细心看看，好多的私有key。不过不必天真，Code signing Entitlements若出现了私有key，是不允许上架的。在MobileSafari.xml添加get-task-allow这个key，并赋值为true，保存退出。</p>
+</li>
+<li><p>对MobileSafari进行重签名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldid -SMobileSafari.xml ./MobileSafari</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将MobileSafari重新拷贝回iOS设备，声明下权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 ./MobileSafari</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动Safari，Debug - Attach to Process - [process name]。</p>
+</li>
+<li>成功Attach上去之后，点击暂停按钮，在控制台执行指令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po [[NSBundle mainBundle] objectForInfoDictionaryKey:@<span class="string">"CFBundleDisplayName"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>打印出App的名称，可以看到Safari，如下图：</p>
+<p><img src="/images/2014/01/Attach-Safari-1.png" alt=""></p>
+<h2 id="测试环境和工具"><a href="#测试环境和工具" class="headerlink" title="测试环境和工具"></a>测试环境和工具</h2><ul>
+<li>Xcode 5.0</li>
+<li>越狱的iPhone，iOS6.1</li>
+<li>ifunbox</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.dreamingwish.com/dream-2011/xcode-the-get-task-allow-whats-the-use.html" title="xcode中的get-task-allow有什么用？" target="_blank" rel="noopener">xcode中的get-task-allow有什么用？</a></p>
+</div><div class="tags"><a href="/tags/iOS/">iOS</a><a href="/tags/iOS调试技巧/">iOS调试技巧</a></div><div class="post-nav"><a class="pre" href="/646/">iOS调试技巧（4）—— LLDB指令</a><a class="next" href="/542/">iOS调试技巧（2）——堆栈</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'hotobear';
+var disqus_identifier = '627/';
+var disqus_title = 'iOS调试技巧（3）—— Attach to Process with Xcode';
+var disqus_url = 'http://hotobear.com/627/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//hotobear.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://hotobear.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学而后思/">学而后思</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活点滴/">生活点滴</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/调色板/">调色板</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/iOS-7/" style="font-size: 15px;">iOS 7</a> <a href="/tags/阶段总结/" style="font-size: 15px;">阶段总结</a> <a href="/tags/偶像/" style="font-size: 15px;">偶像</a> <a href="/tags/驾校/" style="font-size: 15px;">驾校</a> <a href="/tags/焦虑/" style="font-size: 15px;">焦虑</a> <a href="/tags/猎豹浏览器/" style="font-size: 15px;">猎豹浏览器</a> <a href="/tags/熊本熊/" style="font-size: 15px;">熊本熊</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/iOS调试技巧/" style="font-size: 15px;">iOS调试技巧</a> <a href="/tags/AKB48/" style="font-size: 15px;">AKB48</a> <a href="/tags/城市物种日历/" style="font-size: 15px;">城市物种日历</a> <a href="/tags/一吻定情/" style="font-size: 15px;">一吻定情</a> <a href="/tags/Safari/" style="font-size: 15px;">Safari</a> <a href="/tags/梶浦由记香港演唱会/" style="font-size: 15px;">梶浦由记香港演唱会</a> <a href="/tags/动画/" style="font-size: 15px;">动画</a> <a href="/tags/博客日志/" style="font-size: 15px;">博客日志</a> <a href="/tags/越狱开发/" style="font-size: 15px;">越狱开发</a> <a href="/tags/iOS-8/" style="font-size: 15px;">iOS 8</a> <a href="/tags/WebKit/" style="font-size: 15px;">WebKit</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/游戏/" style="font-size: 15px;">游戏</a> <a href="/tags/iOS-9/" style="font-size: 15px;">iOS 9</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">不掏蜂窝的熊.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
